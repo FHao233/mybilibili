@@ -3,13 +3,11 @@ package com.fhao.api;
 import com.fhao.api.support.UserSupport;
 import com.fhao.domin.JsonResponse;
 import com.fhao.domin.User;
+import com.fhao.domin.UserInfo;
 import com.fhao.service.UserService;
 import com.fhao.util.RSAUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * author: FHao
@@ -43,5 +41,20 @@ public class UserApi {
     public JsonResponse<String> login(@RequestBody User user) throws Exception {
         String token = userService.login(user);
         return new JsonResponse<>(token);
+    }
+    @PutMapping("/users")
+    public JsonResponse<String> updateUsers(@RequestBody User user) throws Exception {
+        Long userId = userSupport.getCurrentUserId();
+        user.setId(userId);
+        userService.updateUsers(user);
+        return JsonResponse.success();
+
+    }
+    @PutMapping("/user-infos")
+    public JsonResponse<String> updateUserInfos(@RequestBody UserInfo userInfo){
+        Long userId = userSupport.getCurrentUserId();
+        userInfo.setUserId(userId);
+        userService.updateUserInfos(userInfo);
+        return JsonResponse.success();
     }
 }

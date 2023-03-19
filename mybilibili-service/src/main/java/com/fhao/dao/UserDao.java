@@ -21,4 +21,10 @@ public interface UserDao {
     User getUserById(Long id);
 
     UserInfo getUserInfoByUserId(Long userId);
+
+    Integer updateUsers(User user);
+
+    Integer updateUserInfos(UserInfo userInfo);
+
+    User getUserByPhoneOrEmail(String phone, String email);
 }
