@@ -1,13 +1,18 @@
 package com.fhao.api;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fhao.api.support.UserSupport;
 import com.fhao.domin.JsonResponse;
+import com.fhao.domin.PageResult;
 import com.fhao.domin.User;
 import com.fhao.domin.UserInfo;
+import com.fhao.service.UserFollowingService;
 import com.fhao.service.UserService;
 import com.fhao.service.util.RSAUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * author: FHao
@@ -20,6 +25,8 @@ public class UserApi {
     private UserService userService;
     @Autowired
     private UserSupport userSupport;
+    @Autowired
+    private UserFollowingService userFollowingService;
     @GetMapping("/users")
     public JsonResponse<User> getUserInfo(){
         Long userId = userSupport.getCurrentUserId();
@@ -58,4 +65,26 @@ public class UserApi {
         return JsonResponse.success();
     }
 
+    /**
+     * 查询用户信息列表
+     * @param pageNo 当前页码
+     * @param size 每页展示数据数量
+     * @param nike 模糊查询条件
+     * @return
+     */
+    @GetMapping("/user-infos")
+    public JsonResponse<PageResult<UserInfo>> pageListUserInfos(@RequestParam Integer pageNo,@RequestParam Integer size,String nike){
+        Long userId = userSupport.getCurrentUserId();
+        JSONObject params = new JSONObject();
+        params.put("pageNo",pageNo);
+        params.put("size",size);
+        params.put("nick",nike);
+        params.put("userId",userId);
+        PageResult<UserInfo> result = userService.pageListUserInfos(params);
+        if (result.getTotal() > 0){
+            List<UserInfo> checkedUserInfoList = userFollowingService.checkFollowingStatus(result.getList(),userId);
+            result.setList(checkedUserInfoList);
+        }
+        return new JsonResponse<>(result);
+    }
 }

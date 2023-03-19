@@ -1,10 +1,12 @@
 package com.fhao.dao;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fhao.domin.User;
 import com.fhao.domin.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -32,4 +34,8 @@ public interface UserDao {
     User getUserByPhoneOrEmail(String phone, String email);
 
     List<UserInfo> getUserInfoByUserIds(Set<Long> userIdList);
+
+    Integer pageCountUserInfos(Map<String,Object> params);
+
+    List<UserInfo> pageListUserInfos(Map<String,Object> params);
 }
