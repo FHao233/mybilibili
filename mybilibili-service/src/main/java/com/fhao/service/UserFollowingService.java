@@ -109,4 +109,42 @@ public class UserFollowingService {
         }
         return result;
     }
+    // 第一步：获取当前用户的粉丝列表
+    // 第二步：根据粉丝的用户id查询基本信息
+    // 第三步：查询当前用户是否已经关注该粉丝，互关状态
+    public List<UserFollowing> getUserFans(Long userId){
+        //查询当前userId的粉丝信息
+        List<UserFollowing> fanList = userFollowingDao.getUserFans(userId);
+        //得到被粉丝用户的id集合
+        Set<Long> fanIdSet = fanList.stream().map(UserFollowing::getUserId).collect(Collectors.toSet());
+        List<UserInfo> userInfoList = new ArrayList<>();
+        //如果存在粉丝
+        if (fanIdSet.size() > 0){
+            //查询粉丝们的用户信息
+            userInfoList =  userService.getUserInfoByUserIds(fanIdSet);
+        }
+        //得到当前用户的关注列表，和他的粉丝列表做对比，得到互粉对象
+        List<UserFollowing> followingList = userFollowingDao.getUserFollowings(userId);
+        //遍历所有的粉丝关注信息
+        for (UserFollowing fan : fanList) {
+            //遍历粉丝的用户信息
+            for (UserInfo userInfo : userInfoList) {
+                //如果关注信息和用户信息属于同一个用户
+                if(fan.getUserId().equals(userInfo.getUserId())){
+                    //设置不是互粉状态
+                    userInfo.setFollowed(false);
+                    //为关注信息添加用户信息
+                    fan.setUserInfo(userInfo);
+                }
+            }
+            //遍历当前用户的关注信息
+            for (UserFollowing following : followingList) {
+                //如果发现该用户关注了他的粉丝，则说明互粉，设置标志位为true
+                if(following.getFollowingId().equals(fan.getUserId())){
+                    fan.getUserInfo().setFollowed(true);
+                }
+            }
+        }
+        return fanList;
+    }
 }
