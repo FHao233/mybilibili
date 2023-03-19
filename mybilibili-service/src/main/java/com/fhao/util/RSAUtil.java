@@ -25,7 +25,11 @@ public class RSAUtil {
 
 	public static void main(String[] args) throws Exception{
 		String str = RSAUtil.encrypt("123456");
+//		String a = "dxcTHqUUAJc7AZU0SpE+kIjNcSMD1ZU5g785bKNfB+YF00yZzieO4Qa3xSeQdTVw3JfeRTx7uvsW/VlFtm0whwkqEYnZ7M8uvOT2Tjwp574D2CBI7GDqCinIf4K7k0RoletKEhCgnZH3gAvOxsHleFVLkNiT7mS3swakGmajzak=";
+//		String str = RSAUtil.decrypt(a);
 		System.out.println(str);
+//		RSAKey rsaKey = RSAUtil.generateKeyPair();
+//		System.out.println(rsaKey);
 	}
 
 	public static String getPublicKeyStr(){
@@ -123,5 +127,15 @@ public class RSAUtil {
 		  public void setPublicKeyString(String publicKeyString) {
 		    this.publicKeyString = publicKeyString;
 		  }
+
+		@Override
+		public String toString() {
+			return "RSAKey{" +
+					"privateKey=" + privateKey +
+					", privateKeyString='" + privateKeyString + '\'' +
+					", publicKey=" + publicKey +
+					", publicKeyString='" + publicKeyString + '\'' +
+					'}';
 		}
+	}
 }
