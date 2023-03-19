@@ -57,4 +57,5 @@ public class UserApi {
         userService.updateUserInfos(userInfo);
         return JsonResponse.success();
     }
+
 }

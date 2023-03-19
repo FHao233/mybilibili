@@ -30,7 +30,8 @@ public class UserFollowingService {
     private FollowingGroupService followingGroupService;
     @Autowired
     private UserService userService;
-
+//    @Autowired
+//    private UserfollowingG
     @Transactional
     public void addUserFollowings(UserFollowing userFollowing){
         //先判断是否是已经关注的对象，如果关注分组不存在，则赋给默认分组值，否则得到用户关注的分组信息
@@ -146,5 +147,16 @@ public class UserFollowingService {
             }
         }
         return fanList;
+    }
+
+    public Long addUserFollowingGroups(FollowingGroup followingGroup) {
+        followingGroup.setCreateTime(new Date());
+        followingGroup.setType(UserConstant.USER_FOLLOWING_GROUP_TYPE_USER);//用户自建分组
+        followingGroupService.addFollowingGroup(followingGroup);
+        return followingGroup.getId();
+    }
+
+    public List<FollowingGroup> getUserFollowingGroup(Long userId) {
+        return followingGroupService.getUserFollowingGroup(userId);
     }
 }
