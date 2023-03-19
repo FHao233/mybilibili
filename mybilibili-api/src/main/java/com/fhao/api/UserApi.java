@@ -5,7 +5,7 @@ import com.fhao.domin.JsonResponse;
 import com.fhao.domin.User;
 import com.fhao.domin.UserInfo;
 import com.fhao.service.UserService;
-import com.fhao.util.RSAUtil;
+import com.fhao.service.util.RSAUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
