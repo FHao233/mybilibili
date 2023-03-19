@@ -5,14 +5,16 @@ import com.fhao.domin.User;
 import com.fhao.domin.UserInfo;
 import com.fhao.domin.constant.UserConstant;
 import com.fhao.domin.exception.ConditionException;
-import com.fhao.util.MD5Util;
-import com.fhao.util.RSAUtil;
-import com.fhao.util.TokenUtil;
+import com.fhao.service.util.MD5Util;
+import com.fhao.service.util.RSAUtil;
+import com.fhao.service.util.TokenUtil;
 import com.mysql.cj.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * author: FHao
@@ -117,5 +119,13 @@ public class UserService {
     public void updateUserInfos(UserInfo userInfo) {
         userInfo.setUpdateTime(new Date());
         userDao.updateUserInfos(userInfo);
+    }
+
+    public User getUserById(Long followingId) {
+        return userDao.getUserById(followingId);
+    }
+
+    public List<UserInfo> getUserInfoByUserIds(Set<Long> userIdList) {
+        return userDao.getUserInfoByUserIds(userIdList);
     }
 }

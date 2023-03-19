@@ -1,4 +1,4 @@
-package com.fhao.config;
+package com.fhao.service.config;
 
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;

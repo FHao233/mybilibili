@@ -1,7 +1,7 @@
 package com.fhao.api.support;
 
 import com.fhao.domin.exception.ConditionException;
-import com.fhao.util.TokenUtil;
+import com.fhao.service.util.TokenUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;

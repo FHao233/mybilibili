@@ -1,4 +1,4 @@
-package com.fhao.util;
+package com.fhao.service.util;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 import javax.crypto.Cipher;

@@ -1,4 +1,4 @@
-package com.fhao.util;
+package com.fhao.service.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

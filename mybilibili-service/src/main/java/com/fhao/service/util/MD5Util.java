@@ -1,4 +1,4 @@
-package com.fhao.util;
+package com.fhao.service.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
