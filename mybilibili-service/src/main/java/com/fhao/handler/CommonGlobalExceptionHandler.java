@@ -1,7 +1,7 @@
 package com.fhao.handler;
 
 import com.fhao.domin.JsonResponse;
-import com.fhao.exception.ConditionException;
+import com.fhao.domin.exception.ConditionException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ControllerAdvice;
