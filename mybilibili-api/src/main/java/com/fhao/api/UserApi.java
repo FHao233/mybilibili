@@ -70,7 +70,7 @@ public class UserApi {
      * @param pageNo 当前页码
      * @param size 每页展示数据数量
      * @param nike 模糊查询条件
-     * @return
+     * @return JsonResponse
      */
     @GetMapping("/user-infos")
     public JsonResponse<PageResult<UserInfo>> pageListUserInfos(@RequestParam Integer pageNo,@RequestParam Integer size,String nike){
