@@ -1,7 +1,7 @@
 package com.fhao.service;
 
 import com.fhao.dao.FollowingGroupDao;
-import com.fhao.domin.FollowingGroup;
+import com.fhao.domain.FollowingGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

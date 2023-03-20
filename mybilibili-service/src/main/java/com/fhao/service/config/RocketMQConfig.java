@@ -2,9 +2,9 @@ package com.fhao.service.config;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.fhao.domin.UserFollowing;
-import com.fhao.domin.UserMoment;
-import com.fhao.domin.constant.UserMomentConstant;
+import com.fhao.domain.UserFollowing;
+import com.fhao.domain.UserMoment;
+import com.fhao.domain.constant.UserMomentConstant;
 import com.fhao.service.UserFollowingService;
 import com.mysql.cj.util.StringUtils;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
@@ -12,7 +12,6 @@ import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
-import org.apache.rocketmq.client.impl.consumer.DefaultMQPushConsumerImpl;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +70,7 @@ public class RocketMQConfig {
                 //遍历粉丝
                 for (UserFollowing fan : fanList) {
                     //创建key
-                    String key = "subscribed-" + fan.getUserId();
+                    String key = UserMomentConstant.REDIS_SUBSCRIBED_PREFIX + fan.getUserId();
                     //根据key到redis中找数据
                     String subscribedListStr = redisTemplate.opsForValue().get(key);
                     //创建一个保存动态信息的列表

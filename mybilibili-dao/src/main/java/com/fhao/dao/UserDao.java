@@ -1,8 +1,7 @@
 package com.fhao.dao;
 
-import com.alibaba.fastjson.JSONObject;
-import com.fhao.domin.User;
-import com.fhao.domin.UserInfo;
+import com.fhao.domain.User;
+import com.fhao.domain.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

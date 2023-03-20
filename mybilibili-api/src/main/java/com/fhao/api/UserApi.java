@@ -2,10 +2,10 @@ package com.fhao.api;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fhao.api.support.UserSupport;
-import com.fhao.domin.JsonResponse;
-import com.fhao.domin.PageResult;
-import com.fhao.domin.User;
-import com.fhao.domin.UserInfo;
+import com.fhao.domain.JsonResponse;
+import com.fhao.domain.PageResult;
+import com.fhao.domain.User;
+import com.fhao.domain.UserInfo;
 import com.fhao.service.UserFollowingService;
 import com.fhao.service.UserService;
 import com.fhao.service.util.RSAUtil;

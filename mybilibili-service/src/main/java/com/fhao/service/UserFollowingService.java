@@ -1,12 +1,12 @@
 package com.fhao.service;
 
 import com.fhao.dao.UserFollowingDao;
-import com.fhao.domin.FollowingGroup;
-import com.fhao.domin.User;
-import com.fhao.domin.UserFollowing;
-import com.fhao.domin.UserInfo;
-import com.fhao.domin.constant.UserConstant;
-import com.fhao.domin.exception.ConditionException;
+import com.fhao.domain.FollowingGroup;
+import com.fhao.domain.User;
+import com.fhao.domain.UserFollowing;
+import com.fhao.domain.UserInfo;
+import com.fhao.domain.constant.UserConstant;
+import com.fhao.domain.exception.ConditionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

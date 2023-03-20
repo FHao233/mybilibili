@@ -5,7 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.fhao.domin.exception.ConditionException;
+import com.fhao.domain.exception.ConditionException;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -22,7 +22,7 @@ public class TokenUtil {
         Algorithm algorithm = Algorithm.RSA256(RSAUtil.getPublicKey(),RSAUtil.getPrivateKey());
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        calendar.add(Calendar.SECOND,30);
+        calendar.add(Calendar.MINUTE,5);
         return JWT.create().withKeyId(String.valueOf(userId)).
                 withIssuer(ISSUER).
                 withExpiresAt(calendar.getTime()).sign(algorithm);

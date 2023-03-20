@@ -10,7 +10,7 @@
         where userId = #{userId}
           and followingId = #{followingId}
     </delete>
-    <insert id="addUserFollowing" parameterType="com.fhao.domin.UserFollowing">
+    <insert id="addUserFollowing" parameterType="com.fhao.domain.UserFollowing">
         insert into
             t_user_following(
             userId,
@@ -32,7 +32,7 @@
         where
             userId = #{userId}
     </select>
-    <select id="getUserFans" parameterType="java.lang.Long" resultType="com.imooc.bilibili.domain.UserFollowing">
+    <select id="getUserFans" parameterType="java.lang.Long" resultType="com.fhao.domain.UserFollowing">
         select
             *
         from

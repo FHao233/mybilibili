@@ -1,14 +1,16 @@
 package com.fhao.api;
 
 import com.fhao.api.support.UserSupport;
-import com.fhao.domin.JsonResponse;
-import com.fhao.domin.UserMoment;
+import com.fhao.domain.JsonResponse;
+import com.fhao.domain.UserMoment;
 import com.fhao.service.UserMomentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * author: FHao
@@ -29,4 +31,11 @@ public class UserMomentApi {
         userMomentsService.addUserMoments(userMoment);
         return JsonResponse.success();
     }
+    @GetMapping("/user-subscribed-moments")
+    public JsonResponse<List<UserMoment>> getUserSubscribedMoments(){
+        Long userId = userSupport.getCurrentUserId();
+        List<UserMoment> result = userMomentsService.getUserSubscribedMoments(userId);
+        return new JsonResponse<>(result);
+    }
+
 }

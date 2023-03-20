@@ -2,11 +2,11 @@ package com.fhao.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.fhao.dao.UserDao;
-import com.fhao.domin.PageResult;
-import com.fhao.domin.User;
-import com.fhao.domin.UserInfo;
-import com.fhao.domin.constant.UserConstant;
-import com.fhao.domin.exception.ConditionException;
+import com.fhao.domain.PageResult;
+import com.fhao.domain.User;
+import com.fhao.domain.UserInfo;
+import com.fhao.domain.constant.UserConstant;
+import com.fhao.domain.exception.ConditionException;
 import com.fhao.service.util.MD5Util;
 import com.fhao.service.util.RSAUtil;
 import com.fhao.service.util.TokenUtil;

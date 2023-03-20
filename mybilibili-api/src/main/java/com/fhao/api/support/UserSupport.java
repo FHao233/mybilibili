@@ -1,6 +1,6 @@
 package com.fhao.api.support;
 
-import com.fhao.domin.exception.ConditionException;
+import com.fhao.domain.exception.ConditionException;
 import com.fhao.service.util.TokenUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD MAPPER 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fhao.dao.UserDao">
-    <select id="getUserByPhone" parameterType="java.lang.String" resultType="com.fhao.domin.User">
+    <select id="getUserByPhone" parameterType="java.lang.String" resultType="com.fhao.domain.User">
         select *
         from t_user
         where phone = #{phone}
     </select>
 
-    <select id="getUserByPhoneOrEmail" parameterType="java.lang.String" resultType="com.fhao.domin.User">
+    <select id="getUserByPhoneOrEmail" parameterType="java.lang.String" resultType="com.fhao.domain.User">
         select *
         from t_user
         where phone = #{phone}
            or email = #{email}
     </select>
 
-    <insert id="addUser" parameterType="com.fhao.domin.User" useGeneratedKeys="true" keyProperty="id">
+    <insert id="addUser" parameterType="com.fhao.domain.User" useGeneratedKeys="true" keyProperty="id">
         insert into t_user(phone,
                            email,
                            password,
@@ -27,7 +27,7 @@
                 #{createTime})
     </insert>
 
-    <insert id="addUserInfo" parameterType="com.fhao.domin.UserInfo">
+    <insert id="addUserInfo" parameterType="com.fhao.domain.UserInfo">
         insert into t_user_info(userId,
                                 nick,
                                 avatar,
@@ -43,17 +43,17 @@
                 #{birth},
                 #{createTime})
     </insert>
-    <select id="getUserById" parameterType="java.lang.Long" resultType="com.fhao.domin.User">
+    <select id="getUserById" parameterType="java.lang.Long" resultType="com.fhao.domain.User">
         select *
         from t_user
         where id = #{id}
     </select>
-    <select id="getUserInfoByUserId" parameterType="java.lang.Long" resultType="com.fhao.domin.UserInfo">
+    <select id="getUserInfoByUserId" parameterType="java.lang.Long" resultType="com.fhao.domain.UserInfo">
         select *
         from t_user_info
         where userId = #{userId}
     </select>
-    <update id="updateUsers" parameterType="com.fhao.domin.User">
+    <update id="updateUsers" parameterType="com.fhao.domain.User">
         update
         t_user
         set
@@ -70,7 +70,7 @@
         where
         id = #{id}
     </update>
-    <update id="updateUserInfos" parameterType="com.fhao.domin.UserInfo">
+    <update id="updateUserInfos" parameterType="com.fhao.domain.UserInfo">
         update
         t_user_info
         set
@@ -93,7 +93,7 @@
         where
         userId = #{userId}
     </update>
-    <select id="getUserInfoByUserIds" resultType="com.fhao.domin.UserInfo">
+    <select id="getUserInfoByUserIds" resultType="com.fhao.domain.UserInfo">
         select *
         from t_user_info
         where 1 = 1
@@ -115,7 +115,7 @@
             and nick like '%${nick}%'
         </if>
     </select>
-    <select id="pageListUserInfos" parameterType="java.util.Map" resultType="com.imooc.bilibili.domain.UserInfo">
+    <select id="pageListUserInfos" parameterType="java.util.Map" resultType="com.fhao.domain.UserInfo">
         select
         *
         from

@@ -1,6 +1,6 @@
 package com.fhao.dao;
 
-import com.fhao.domin.UserFollowing;
+import com.fhao.domain.UserFollowing;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

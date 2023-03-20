@@ -1,9 +1,9 @@
 package com.fhao.api;
 
 import com.fhao.api.support.UserSupport;
-import com.fhao.domin.FollowingGroup;
-import com.fhao.domin.JsonResponse;
-import com.fhao.domin.UserFollowing;
+import com.fhao.domain.FollowingGroup;
+import com.fhao.domain.JsonResponse;
+import com.fhao.domain.UserFollowing;
 import com.fhao.service.UserFollowingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

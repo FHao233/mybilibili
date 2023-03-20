@@ -1,6 +1,6 @@
 package com.fhao.dao;
 
-import com.fhao.domin.FollowingGroup;
+import com.fhao.domain.FollowingGroup;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
