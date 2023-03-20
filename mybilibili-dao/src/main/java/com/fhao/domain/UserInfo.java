@@ -1,4 +1,4 @@
-package com.fhao.domin;
+package com.fhao.domain;
 
 //import org.springframework.data.annotation.Id;
 //import org.springframework.data.elasticsearch.annotations.Document;

@@ -1,4 +1,4 @@
-package com.fhao.domin;
+package com.fhao.domain;
 
 import java.util.Date;
 

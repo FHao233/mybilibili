@@ -1,7 +1,4 @@
-package com.fhao.domin;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
+package com.fhao.domain;
 
 import java.util.Date;
 

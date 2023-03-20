@@ -1,4 +1,4 @@
-package com.fhao.domin.exception;
+package com.fhao.domain.exception;
 
 /**
  * author: FHao

@@ -1,4 +1,4 @@
-package com.fhao.domin.constant;
+package com.fhao.domain.constant;
 
 /**
  * author: FHao
@@ -9,4 +9,5 @@ public interface UserMomentConstant {
 
     String GROUP_MOMENTS = "MomentsGroup";
     String TOPIC_MOMENTS = "Topic-Moments";
+    String REDIS_SUBSCRIBED_PREFIX = "subscribed-";
 }

@@ -1,4 +1,4 @@
-package com.fhao.domin.constant;
+package com.fhao.domain.constant;
 
 /**
  * author: FHao
