@@ -3,6 +3,9 @@ package com.fhao.api;
 import com.fhao.api.support.UserSupport;
 import com.fhao.domain.JsonResponse;
 import com.fhao.domain.UserMoment;
+import com.fhao.domain.annotation.ApiLimitedRole;
+import com.fhao.domain.annotation.DataLimited;
+import com.fhao.domain.constant.AuthRoleConstant;
 import com.fhao.service.UserMomentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +28,8 @@ public class UserMomentApi {
     private UserSupport userSupport;
 
     @PostMapping("/user-moments")
+    @DataLimited
+    @ApiLimitedRole(limitedRoleCodeList = {AuthRoleConstant.ROLE_LV0})
     public JsonResponse<String> addUserMoments(@RequestBody UserMoment userMoment) throws Exception {
         Long userId = userSupport.getCurrentUserId();
         userMoment.setUserId(userId);

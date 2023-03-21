@@ -60,6 +60,7 @@ public class UserService {
         userInfo.setGender(UserConstant.GENDER_MALE);
         userInfo.setCreateTime(now);
         userDao.addUserInfo(userInfo);
+
     }
     public User getUserByPhone(String phone){
         return userDao.getUserByPhone(phone);
