@@ -28,7 +28,8 @@ import java.util.Set;
 public class UserService {
     @Autowired
     private UserDao userDao;
-
+    @Autowired
+    private UserAuthoService userAuthoService;
     public void addUser(User user) {
         String phone = user.getPhone();
         if(StringUtils.isNullOrEmpty(phone)){
@@ -60,7 +61,8 @@ public class UserService {
         userInfo.setGender(UserConstant.GENDER_MALE);
         userInfo.setCreateTime(now);
         userDao.addUserInfo(userInfo);
-
+        //添加默认角色
+        userAuthoService.addUserDefaultRole(user.getId());
     }
     public User getUserByPhone(String phone){
         return userDao.getUserByPhone(phone);

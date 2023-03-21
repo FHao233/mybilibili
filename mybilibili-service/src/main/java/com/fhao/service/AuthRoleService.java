@@ -1,6 +1,8 @@
 package com.fhao.service;
 
+import com.fhao.dao.AuthRoleDao;
 import com.fhao.domain.auth.AuthMenu;
+import com.fhao.domain.auth.AuthRole;
 import com.fhao.domain.auth.AuthRoleElementOperation;
 import com.fhao.domain.auth.AuthRoleMenu;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class AuthRoleService {
     private AuthRoleElementOperationService authRoleElementOperationService;
     @Autowired
     private AuthRoleMenuService authRoleMenuService;
+    @Autowired
+    private AuthRoleDao authRoleDao;
     public List<AuthRoleElementOperation> getRoleElementOperationsByRoleIds(Set<Long> roleIdSet) {
         return authRoleElementOperationService.getRoleElementOperationsByRoleIds(roleIdSet);
 
@@ -27,5 +31,9 @@ public class AuthRoleService {
 
     public List<AuthRoleMenu> getAuthRoleMenusByRoleIds(Set<Long> roleIdSet) {
         return authRoleMenuService.getAuthRoleMenusByRoleIds(roleIdSet);
+    }
+
+    public AuthRole getRoleByCode(String code) {
+        return authRoleDao.getRoleByCode(code);
     }
 }

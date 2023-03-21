@@ -1,9 +1,11 @@
 package com.fhao.service;
 
 import com.fhao.domain.auth.*;
+import com.fhao.domain.constant.AuthRoleConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -28,5 +30,14 @@ public class UserAuthoService {
         userAuthorities.setRoleMenuList(authRoleMenus);
         userAuthorities.setRoleElementOperationList(roleElementOperationList);
         return userAuthorities;
+    }
+
+    public void addUserDefaultRole(Long id) {
+        UserRole userRole = new UserRole();
+        AuthRole authRole = authRoleService.getRoleByCode(AuthRoleConstant.ROLE_LV0);
+        userRole.setRoleId(authRole.getId());
+        userRole.setUserId(id);
+        userRole.setCreateTime(new Date());
+        userRoleService.addUserRole(userRole);
     }
 }
