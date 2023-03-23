@@ -44,7 +44,6 @@ public class TokenUtil {
             throw new ConditionException("非法用户token！");
         }
     }
-
     public static String generateRefreshToken(Long userId) throws Exception {
         Algorithm algorithm = Algorithm.RSA256(RSAUtil.getPublicKey(), RSAUtil.getPrivateKey());
         Calendar calendar = Calendar.getInstance();
