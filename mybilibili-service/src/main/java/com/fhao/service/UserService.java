@@ -199,4 +199,9 @@ public class UserService {
         String accessToken = TokenUtil.generateToken(userId);
         return accessToken;
     }
+
+    public List<UserInfo> batchGetUserInfoByUserIds(Set<Long> userIdList) {
+        return userDao.batchGetUserInfoByUserIds(userIdList);
+
+    }
 }

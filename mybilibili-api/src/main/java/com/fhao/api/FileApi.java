@@ -26,7 +26,8 @@ public class FileApi {
         String filePath = fileService.uploadFileBySlices(slice,fileMd5,sliceNo,totalSliceNo);
         return new JsonResponse<>(filePath);
     }
-//    74344923719bf035758f0992921cb8d7
+//    6f5f74af2dbce8872d89573b937f6b22
+//    M00/00/00/wKiIgGQebeyEIMoRAAAAACQPk0w5.1.mp4
     @PostMapping("/md5files")
     public JsonResponse<String> getFileMD5(MultipartFile file) throws Exception {
         String fileMD5 = fileService.getFileMD5(file);
