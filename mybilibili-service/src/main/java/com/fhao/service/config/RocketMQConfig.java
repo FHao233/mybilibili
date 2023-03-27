@@ -4,8 +4,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fhao.domain.UserFollowing;
 import com.fhao.domain.UserMoment;
-import com.fhao.domain.constant.UserMomentConstant;
+import com.fhao.domain.constant.MQConstant;
 import com.fhao.service.UserFollowingService;
+import com.fhao.service.websocket.WebSocketService;
 import com.mysql.cj.util.StringUtils;
 import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,29 +36,31 @@ public class RocketMQConfig {
     private String nameServerAddr;
 
     @Autowired
-    private RedisTemplate<String,String> redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
     @Autowired
     private UserFollowingService userFollowingService;
+
     @Bean("momentsProducer")
     public DefaultMQProducer momentsProducer() throws MQClientException {
-        DefaultMQProducer producer = new DefaultMQProducer(UserMomentConstant.GROUP_MOMENTS);
+        DefaultMQProducer producer = new DefaultMQProducer(MQConstant.GROUP_MOMENTS);
         producer.setNamesrvAddr(nameServerAddr);
         producer.start();
         return producer;
     }
+
     @Bean("momentsConsumer")
-    public DefaultMQPushConsumer momentsConsumer()throws MQClientException {
-        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(UserMomentConstant.GROUP_MOMENTS);
+    public DefaultMQPushConsumer momentsConsumer() throws MQClientException {
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(MQConstant.GROUP_MOMENTS);
         consumer.setNamesrvAddr(nameServerAddr);
-        consumer.subscribe(UserMomentConstant.TOPIC_MOMENTS,"*");
+        consumer.subscribe(MQConstant.TOPIC_MOMENTS, "*");
         consumer.registerMessageListener(new MessageListenerConcurrently() {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
                 //获取消息
                 MessageExt msg = msgs.get(0);
                 //如果动态消息为空
-                if(msg == null){
+                if (msg == null) {
                     return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
                 }
                 //得到动态信息
@@ -66,27 +70,67 @@ public class RocketMQConfig {
                 //获取动态表中的用户id
                 Long userId = userMoment.getUserId();
                 //得到该用户的粉丝们，为他们推送消息
-                List<UserFollowing> fanList= userFollowingService.getUserFans(userId);
+                List<UserFollowing> fanList = userFollowingService.getUserFans(userId);
                 //遍历粉丝
                 for (UserFollowing fan : fanList) {
                     //创建key
-                    String key = UserMomentConstant.REDIS_SUBSCRIBED_PREFIX + fan.getUserId();
+                    String key = MQConstant.REDIS_SUBSCRIBED_PREFIX + fan.getUserId();
                     //根据key到redis中找数据
                     String subscribedListStr = redisTemplate.opsForValue().get(key);
                     //创建一个保存动态信息的列表
                     List<UserMoment> subscribedList;
                     //如果redis中没有给对应粉丝推送的消息
-                    if(StringUtils.isNullOrEmpty(subscribedListStr)){
+                    if (StringUtils.isNullOrEmpty(subscribedListStr)) {
                         //创建一个新的List
                         subscribedList = new ArrayList<>();
-                    }else {
+                    } else {
                         //如果有的话转换成动态信息
-                        subscribedList = JSONArray.parseArray(subscribedListStr,UserMoment.class);
+                        subscribedList = JSONArray.parseArray(subscribedListStr, UserMoment.class);
                     }
                     //为动态列表添加动态信息
                     subscribedList.add(userMoment);
                     //为该粉丝保存动态信息到redis中
-                    redisTemplate.opsForValue().set(key,JSONObject.toJSONString(subscribedList));
+                    redisTemplate.opsForValue().set(key, JSONObject.toJSONString(subscribedList));
+                }
+                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+            }
+        });
+        consumer.start();
+        return consumer;
+    }
+
+    @Bean("danmusProducer")
+    public DefaultMQProducer danmusProducer() throws MQClientException {
+        DefaultMQProducer producer = new DefaultMQProducer(MQConstant.GROUP_MOMENTS);
+        producer.setNamesrvAddr(nameServerAddr);
+        producer.start();
+        return producer;
+    }
+
+    @Bean("danmusConsumer")
+    public DefaultMQPushConsumer danmusConsumer() throws MQClientException {
+        DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(MQConstant.GROUP_DANMUS);
+        consumer.setNamesrvAddr(nameServerAddr);
+        consumer.subscribe(MQConstant.TOPIC_DANMUS, "*");
+        consumer.registerMessageListener(new MessageListenerConcurrently() {
+            @Override
+            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs, ConsumeConcurrentlyContext consumeConcurrentlyContext) {
+                //获取消息
+                MessageExt msg = msgs.get(0);
+
+                //得到信息
+                String bodyStr = new String(msg.getBody());
+                //把动态信息字符串转换为对应的对象
+                JSONObject jsonObject = JSONObject.parseObject(bodyStr);
+                String sessionId = jsonObject.getString("sessionId");
+                String message = jsonObject.getString("message");
+                WebSocketService webSocketService = WebSocketService.WEBSOCKET_MAP.get(sessionId);
+                if(webSocketService.getSession().isOpen()){
+                    try {
+                        webSocketService.sendMessage(message);
+                    }catch (IOException e){
+                        e.printStackTrace();
+                    }
                 }
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }

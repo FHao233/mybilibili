@@ -1,21 +1,22 @@
 package com.fhao.domain;
 
-//import org.springframework.data.annotation.Id;
-//import org.springframework.data.elasticsearch.annotations.Document;
-//import org.springframework.data.elasticsearch.annotations.Field;
-//import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
 
 import java.util.Date;
 
-//@Document(indexName = "user-infos")
+@Document(indexName = "user-infos")
 public class UserInfo {
 
-//    @Id
+    @Id
     private Long id;
 
     private Long userId;
 
-//    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Text)
     private String nick;
 
     private String avatar;
@@ -26,10 +27,10 @@ public class UserInfo {
 
     private String birth;
 
-//    @Field(type = FieldType.Date)
+    @Field(type = FieldType.Date)
     private Date createTime;
 
-//    @Field(type = FieldType.Date)
+    @Field(type = FieldType.Date)
     private Date updateTime;
 
     private Boolean followed;

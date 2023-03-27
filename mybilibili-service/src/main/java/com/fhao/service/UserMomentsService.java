@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fhao.dao.UserMomentsDao;
 import com.fhao.domain.UserMoment;
-import com.fhao.domain.constant.UserMomentConstant;
+import com.fhao.domain.constant.MQConstant;
 import com.fhao.service.util.RocketMQUtil;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.apache.rocketmq.common.message.Message;
@@ -33,13 +33,13 @@ public class UserMomentsService {
         userMoment.setCreateTime(new Date());
         userMomentsDao.addUserMoments(userMoment);
         DefaultMQProducer producer = (DefaultMQProducer) applicationContext.getBean("momentsProducer");
-        Message message = new Message(UserMomentConstant.TOPIC_MOMENTS, JSONObject.toJSONString(userMoment).getBytes());
+        Message message = new Message(MQConstant.TOPIC_MOMENTS, JSONObject.toJSONString(userMoment).getBytes());
         RocketMQUtil.syncSendMsg(producer,message);
     }
 
     public List<UserMoment> getUserSubscribedMoments(Long userId) {
 //        momentsConsumer
-        String key = UserMomentConstant.REDIS_SUBSCRIBED_PREFIX + userId;
+        String key = MQConstant.REDIS_SUBSCRIBED_PREFIX + userId;
         String listStr = redisTemplate.opsForValue().get(key);
         return JSONArray.parseArray(listStr,UserMoment.class);
     }
